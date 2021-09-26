@@ -1,0 +1,2054 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1.1 (Python 3.8.10 on linux)" generated="20210925 10:40:39.967" rpa="false" schemaversion="2">
+<suite id="s1" name="Test Assignment 3" source="/home/virginia/Documentos/proyecto2021/test/test_assignment_3.robot">
+<kw name="Start server and create new session" library="assignment3_high_level_keywords" type="SETUP">
+<kw name="Start server" library="assignment3_high_level_keywords">
+<kw name="Start Process" library="Process">
+<arg>bash</arg>
+<arg>run.sh</arg>
+<arg>shell=True</arg>
+<doc>Starts a new process on background.</doc>
+<msg timestamp="20210925 10:40:40.774" level="INFO">Starting process:
+bash run.sh</msg>
+<status status="PASS" starttime="20210925 10:40:40.773" endtime="20210925 10:40:40.797"/>
+</kw>
+<kw name="Set Local Variable" library="BuiltIn">
+<arg>${status}</arg>
+<arg>FAIL</arg>
+<doc>Makes a variable available everywhere within the local scope.</doc>
+<msg timestamp="20210925 10:40:40.820" level="INFO">${status} = FAIL</msg>
+<status status="PASS" starttime="20210925 10:40:40.799" endtime="20210925 10:40:40.829"/>
+</kw>
+<for flavor="IN RANGE">
+<var>${i}</var>
+<value>${max_iterations}</value>
+<iter>
+<var name="${i}">0</var>
+<kw name="Run" library="OperatingSystem">
+<arg>sleep ${sleep_time}</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20210925 10:40:40.862" level="INFO">Running command 'sleep 1 2&gt;&amp;1'.</msg>
+<status status="PASS" starttime="20210925 10:40:40.831" endtime="20210925 10:40:41.876"/>
+</kw>
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<var>${status}</var>
+<var>${response}</var>
+<arg>GET</arg>
+<arg>${URL}/assignments</arg>
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<kw name="GET" library="RequestsLibrary">
+<arg>${URL}/assignments</arg>
+<doc>Sends a GET request.</doc>
+<msg timestamp="20210925 10:40:41.920" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:41.921" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '61', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:41 GMT'} 
+ body={
+  "assignments": [], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<status status="PASS" starttime="20210925 10:40:41.883" endtime="20210925 10:40:41.922"/>
+</kw>
+<msg timestamp="20210925 10:40:41.922" level="INFO">${status} = PASS</msg>
+<msg timestamp="20210925 10:40:41.923" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:41.880" endtime="20210925 10:40:41.923"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${status}&quot; == &quot;PASS&quot;">
+<if>
+<branch type="IF" condition="${response.status_code} == 200">
+<kw name="Set Local Variable" library="BuiltIn">
+<arg>${status}</arg>
+<arg>OK</arg>
+<doc>Makes a variable available everywhere within the local scope.</doc>
+<msg timestamp="20210925 10:40:41.929" level="INFO">${status} = OK</msg>
+<status status="PASS" starttime="20210925 10:40:41.928" endtime="20210925 10:40:41.929"/>
+</kw>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing for loop.</doc>
+<msg timestamp="20210925 10:40:41.931" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20210925 10:40:41.930" endtime="20210925 10:40:41.933"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:41.927" endtime="20210925 10:40:41.933"/>
+</branch>
+<status status="PASS" starttime="20210925 10:40:41.924" endtime="20210925 10:40:41.933"/>
+</if>
+<status status="PASS" starttime="20210925 10:40:41.924" endtime="20210925 10:40:41.933"/>
+</branch>
+<status status="PASS" starttime="20210925 10:40:41.923" endtime="20210925 10:40:41.934"/>
+</if>
+<status status="PASS" starttime="20210925 10:40:40.831" endtime="20210925 10:40:41.934"/>
+</iter>
+<status status="PASS" starttime="20210925 10:40:40.829" endtime="20210925 10:40:41.934"/>
+</for>
+<if>
+<branch type="IF" condition="&quot;${status}&quot; != &quot;OK&quot;">
+<kw name="Fail" library="BuiltIn">
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" starttime="20210925 10:40:41.935" endtime="20210925 10:40:41.935"/>
+</kw>
+<status status="NOT RUN" starttime="20210925 10:40:41.935" endtime="20210925 10:40:41.936"/>
+</branch>
+<status status="PASS" starttime="20210925 10:40:41.934" endtime="20210925 10:40:41.936"/>
+</if>
+<status status="PASS" starttime="20210925 10:40:40.772" endtime="20210925 10:40:41.936"/>
+</kw>
+<kw name="Create new session" library="assignment3_high_level_keywords">
+<kw name="Create Session" library="RequestsLibrary">
+<arg>assignment3</arg>
+<arg>${URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20210925 10:40:41.939" level="INFO">Creating Session using : alias=assignment3, url=http://127.0.0.1:4000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20210925 10:40:41.938" endtime="20210925 10:40:41.943"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:41.937" endtime="20210925 10:40:41.944"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:40.770" endtime="20210925 10:40:41.944"/>
+</kw>
+<test id="s1-t1" name="Scenario: Create a new assignment">
+<kw name="Given An assignment with id 10 does not exist in the system" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id} does not exist in the system">
+<kw name="Delete assignment if exists" library="assignment3_low_level_keywords">
+<arg>${id}</arg>
+<kw name="Get by id" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:41.966" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments/10 
+ path_url=/assignments/10 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:41.966" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments/10 
+ status=404, reason=NOT FOUND 
+ headers={'Content-Type': 'application/json', 'Content-Length': '33', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:41 GMT'} 
+ body={
+  "assignment": "Not Found!"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:41.967" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:41.953" endtime="20210925 10:40:41.967"/>
+</kw>
+<msg timestamp="20210925 10:40:41.968" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:41.951" endtime="20210925 10:40:41.968"/>
+</kw>
+<if>
+<branch type="IF" condition="${resp.status_code} == 200">
+<kw name="Delete assignment" library="assignment3_low_level_keywords">
+<arg>${id}</arg>
+<status status="NOT RUN" starttime="20210925 10:40:41.988" endtime="20210925 10:40:41.989"/>
+</kw>
+<status status="NOT RUN" starttime="20210925 10:40:41.984" endtime="20210925 10:40:41.990"/>
+</branch>
+<status status="PASS" starttime="20210925 10:40:41.968" endtime="20210925 10:40:41.990"/>
+</if>
+<status status="PASS" starttime="20210925 10:40:41.950" endtime="20210925 10:40:41.991"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:41.948" endtime="20210925 10:40:41.992"/>
+</kw>
+<kw name="And The number of assignments in the system is &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:42.031" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:42.032" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '61', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:42 GMT'} 
+ body={
+  "assignments": [], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:42.032" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:41.997" endtime="20210925 10:40:42.032"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:42.038" level="INFO">${list_assign} = []</msg>
+<status status="PASS" starttime="20210925 10:40:42.033" endtime="20210925 10:40:42.039"/>
+</kw>
+<msg timestamp="20210925 10:40:42.040" level="INFO">${list} = []</msg>
+<status status="PASS" starttime="20210925 10:40:41.996" endtime="20210925 10:40:42.040"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:42.042" level="INFO">Length is 0</msg>
+<msg timestamp="20210925 10:40:42.043" level="INFO">${num_items} = 0</msg>
+<status status="PASS" starttime="20210925 10:40:42.040" endtime="20210925 10:40:42.047"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:42.054" level="INFO">${prev_num_items} = 0</msg>
+<status status="PASS" starttime="20210925 10:40:42.048" endtime="20210925 10:40:42.054"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:41.994" endtime="20210925 10:40:42.055"/>
+</kw>
+<kw name="When We create an assignment with id 10, name &quot;New Task&quot;, description &quot;To do something&quot;, price 100 and status &quot;todo&quot;" library="assignment3_high_level_keywords" sourcename="We create an assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot;">
+<kw name="Create assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<arg>${name}</arg>
+<arg>${descr}</arg>
+<arg>${price}</arg>
+<arg>${status}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>id=${${id}}</arg>
+<arg>name=${name}</arg>
+<arg>description=${descr}</arg>
+<arg>price=${${price}}</arg>
+<arg>status=${status}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210925 10:40:42.137" level="INFO">${data} = {'id': 10, 'name': 'New Task', 'description': 'To do something', 'price': 100, 'status': 'todo'}</msg>
+<status status="PASS" starttime="20210925 10:40:42.063" endtime="20210925 10:40:42.140"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<arg>json=${data}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:42.206" level="INFO">POST Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '96', 'Content-Type': 'application/json'} 
+ body=b'{"id": 10, "name": "New Task", "description": "To do something", "price": 100, "status": "todo"}' 
+ </msg>
+<msg timestamp="20210925 10:40:42.212" level="INFO">POST Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '145', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:42 GMT'} 
+ body={
+  "assignment": {
+    "description": "To do something", 
+    "id": 10, 
+    "name": "New Task", 
+    "price": 100, 
+    "status": "todo"
+  }
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:42.212" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.153" endtime="20210925 10:40:42.217"/>
+</kw>
+<msg timestamp="20210925 10:40:42.221" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.059" endtime="20210925 10:40:42.222"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:42.245" level="INFO">${last_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.228" endtime="20210925 10:40:42.245"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.058" endtime="20210925 10:40:42.246"/>
+</kw>
+<kw name="Then Server response should have status code 200" library="assignment3_high_level_keywords" sourcename="Server response should have status code ${status}">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${status}</arg>
+<arg>${last_resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210925 10:40:42.264" endtime="20210925 10:40:42.285"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.250" endtime="20210925 10:40:42.286"/>
+</kw>
+<kw name="And An assignment with id 10, name &quot;New Task&quot;, description &quot;To do something&quot;, price 100 and status &quot;todo&quot; should exist" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot; should exist">
+<kw name="Get by id" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:42.359" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments/10 
+ path_url=/assignments/10 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:42.360" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments/10 
+ status=409, reason=CONFLICT 
+ headers={'Content-Type': 'application/json', 'Content-Length': '167', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:42 GMT'} 
+ body={
+  "assignment": [
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ]
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:42.360" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.321" endtime="20210925 10:40:42.360"/>
+</kw>
+<msg timestamp="20210925 10:40:42.378" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.299" endtime="20210925 10:40:42.378"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${assignments}</var>
+<arg>${resp.json()}</arg>
+<arg>assignment</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:42.392" level="INFO">${assignments} = [{'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'status': 'todo'}]</msg>
+<status status="PASS" starttime="20210925 10:40:42.386" endtime="20210925 10:40:42.392"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${assignment}</var>
+<arg>${assignments}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20210925 10:40:42.419" level="INFO">${assignment} = {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'status': 'todo'}</msg>
+<status status="PASS" starttime="20210925 10:40:42.404" endtime="20210925 10:40:42.419"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>id</arg>
+<arg>${id}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:42.420" endtime="20210925 10:40:42.430"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>name</arg>
+<arg>${name}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:42.430" endtime="20210925 10:40:42.431"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>description</arg>
+<arg>${descr}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:42.432" endtime="20210925 10:40:42.453"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>price</arg>
+<arg>${price}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:42.454" endtime="20210925 10:40:42.455"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>status</arg>
+<arg>${status}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:42.456" endtime="20210925 10:40:42.466"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.298" endtime="20210925 10:40:42.482"/>
+</kw>
+<kw name="And The number of assignments in the system should be &quot;N+1&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:42.560" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:42.561" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '205', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:42 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:42.561" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.488" endtime="20210925 10:40:42.561"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:42.584" level="INFO">${list_assign} = [{'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'status': 'todo'}]</msg>
+<status status="PASS" starttime="20210925 10:40:42.562" endtime="20210925 10:40:42.584"/>
+</kw>
+<msg timestamp="20210925 10:40:42.588" level="INFO">${list} = [{'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'status': 'todo'}]</msg>
+<status status="PASS" starttime="20210925 10:40:42.486" endtime="20210925 10:40:42.588"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:42.592" level="INFO">Length is 1</msg>
+<msg timestamp="20210925 10:40:42.602" level="INFO">${num_items} = 1</msg>
+<status status="PASS" starttime="20210925 10:40:42.590" endtime="20210925 10:40:42.602"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${${prev_num_items}+1}</arg>
+<arg>${num_items}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" starttime="20210925 10:40:42.602" endtime="20210925 10:40:42.628"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.485" endtime="20210925 10:40:42.628"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:41.945" endtime="20210925 10:40:42.634"/>
+</test>
+<test id="s1-t2" name="Scenario: Try to create an existing assignment">
+<kw name="Given An assignment with id 11, name &quot;Another Task&quot;, description &quot;To do something else&quot;, price 1000 and status &quot;Another todo&quot; exists in the system" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot; exists in the system">
+<kw name="We create an assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot;" library="assignment3_high_level_keywords" sourcename="We create an assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot;">
+<kw name="Create assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<arg>${name}</arg>
+<arg>${descr}</arg>
+<arg>${price}</arg>
+<arg>${status}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>id=${${id}}</arg>
+<arg>name=${name}</arg>
+<arg>description=${descr}</arg>
+<arg>price=${${price}}</arg>
+<arg>status=${status}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210925 10:40:42.705" level="INFO">${data} = {'id': 11, 'name': 'Another Task', 'description': 'To do something else', 'price': 1000, 'status': 'Another todo'}</msg>
+<status status="PASS" starttime="20210925 10:40:42.688" endtime="20210925 10:40:42.706"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<arg>json=${data}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:42.747" level="INFO">POST Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '114', 'Content-Type': 'application/json'} 
+ body=b'{"id": 11, "name": "Another Task", "description": "To do something else", "price": 1000, "status": "Another todo"}' 
+ </msg>
+<msg timestamp="20210925 10:40:42.747" level="INFO">POST Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '163', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:42 GMT'} 
+ body={
+  "assignment": {
+    "description": "To do something else", 
+    "id": 11, 
+    "name": "Another Task", 
+    "price": 1000, 
+    "status": "Another todo"
+  }
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:42.748" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.706" endtime="20210925 10:40:42.748"/>
+</kw>
+<msg timestamp="20210925 10:40:42.757" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.669" endtime="20210925 10:40:42.759"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:42.768" level="INFO">${last_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.762" endtime="20210925 10:40:42.786"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.663" endtime="20210925 10:40:42.787"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.654" endtime="20210925 10:40:42.787"/>
+</kw>
+<kw name="And The number of assignments in the system is &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:42.875" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:42.875" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '366', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:42 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:42.876" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.819" endtime="20210925 10:40:42.876"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:42.903" level="INFO">${list_assign} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:42.876" endtime="20210925 10:40:42.904"/>
+</kw>
+<msg timestamp="20210925 10:40:42.904" level="INFO">${list} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:42.806" endtime="20210925 10:40:42.905"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:42.918" level="INFO">Length is 2</msg>
+<msg timestamp="20210925 10:40:42.919" level="INFO">${num_items} = 2</msg>
+<status status="PASS" starttime="20210925 10:40:42.918" endtime="20210925 10:40:42.919"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:42.945" level="INFO">${prev_num_items} = 2</msg>
+<status status="PASS" starttime="20210925 10:40:42.919" endtime="20210925 10:40:42.945"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.792" endtime="20210925 10:40:42.946"/>
+</kw>
+<kw name="When We create an assignment with id 11, name &quot;Yet Another Task&quot;, description &quot;To do something&quot;, price 2000 and status &quot;Yet another todo&quot;" library="assignment3_high_level_keywords" sourcename="We create an assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot;">
+<kw name="Create assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<arg>${name}</arg>
+<arg>${descr}</arg>
+<arg>${price}</arg>
+<arg>${status}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>id=${${id}}</arg>
+<arg>name=${name}</arg>
+<arg>description=${descr}</arg>
+<arg>price=${${price}}</arg>
+<arg>status=${status}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210925 10:40:42.986" level="INFO">${data} = {'id': 11, 'name': 'Yet Another Task', 'description': 'To do something', 'price': 2000, 'status': 'Yet another todo'}</msg>
+<status status="PASS" starttime="20210925 10:40:42.960" endtime="20210925 10:40:42.986"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<arg>json=${data}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.011" level="INFO">POST Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '117', 'Content-Type': 'application/json'} 
+ body=b'{"id": 11, "name": "Yet Another Task", "description": "To do something", "price": 2000, "status": "Yet another todo"}' 
+ </msg>
+<msg timestamp="20210925 10:40:43.012" level="INFO">POST Response : url=http://127.0.0.1:4000/assignments 
+ status=409, reason=CONFLICT 
+ headers={'Content-Type': 'application/json', 'Content-Length': '31', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignment": "repeated"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.012" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.987" endtime="20210925 10:40:43.017"/>
+</kw>
+<msg timestamp="20210925 10:40:43.018" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:42.956" endtime="20210925 10:40:43.018"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:43.023" level="INFO">${last_resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.020" endtime="20210925 10:40:43.024"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.955" endtime="20210925 10:40:43.025"/>
+</kw>
+<kw name="Then Server response should have status code 409" library="assignment3_high_level_keywords" sourcename="Server response should have status code ${status}">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${status}</arg>
+<arg>${last_resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210925 10:40:43.048" endtime="20210925 10:40:43.053"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.028" endtime="20210925 10:40:43.054"/>
+</kw>
+<kw name="And An assignment with id 11, name &quot;Another Task&quot;, description &quot;To do something else&quot;, price 1000 and status &quot;Another todo&quot; should exist" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot; should exist">
+<kw name="Get by id" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.123" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments/11 
+ path_url=/assignments/11 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:43.124" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments/11 
+ status=409, reason=CONFLICT 
+ headers={'Content-Type': 'application/json', 'Content-Length': '328', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignment": [
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ]
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.124" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.098" endtime="20210925 10:40:43.124"/>
+</kw>
+<msg timestamp="20210925 10:40:43.142" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.082" endtime="20210925 10:40:43.142"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${assignments}</var>
+<arg>${resp.json()}</arg>
+<arg>assignment</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:43.155" level="INFO">${assignments} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:43.142" endtime="20210925 10:40:43.155"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${assignment}</var>
+<arg>${assignments}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20210925 10:40:43.157" level="INFO">${assignment} = {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}</msg>
+<status status="PASS" starttime="20210925 10:40:43.156" endtime="20210925 10:40:43.157"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>id</arg>
+<arg>${id}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:43.158" endtime="20210925 10:40:43.159"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>name</arg>
+<arg>${name}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:43.160" endtime="20210925 10:40:43.165"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>description</arg>
+<arg>${descr}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:43.166" endtime="20210925 10:40:43.167"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>price</arg>
+<arg>${price}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:43.167" endtime="20210925 10:40:43.173"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>status</arg>
+<arg>${status}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:43.174" endtime="20210925 10:40:43.175"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.061" endtime="20210925 10:40:43.181"/>
+</kw>
+<kw name="And The number of assignments in the system should be &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.219" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:43.219" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '366', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.220" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.190" endtime="20210925 10:40:43.220"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:43.248" level="INFO">${list_assign} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:43.225" endtime="20210925 10:40:43.248"/>
+</kw>
+<msg timestamp="20210925 10:40:43.255" level="INFO">${list} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:43.184" endtime="20210925 10:40:43.255"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:43.256" level="INFO">Length is 2</msg>
+<msg timestamp="20210925 10:40:43.256" level="INFO">${num_items} = 2</msg>
+<status status="PASS" starttime="20210925 10:40:43.255" endtime="20210925 10:40:43.257"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" starttime="20210925 10:40:43.262" endtime="20210925 10:40:43.263"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.182" endtime="20210925 10:40:43.264"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:42.646" endtime="20210925 10:40:43.266"/>
+</test>
+<test id="s1-t3" name="Scenario: Delete an existing assignment">
+<kw name="Given An assignment with id 12, name &quot;Delete Task&quot;, description &quot;To be deleted&quot;, price 2000 and status &quot;Delete todo&quot; exists in the system" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot; exists in the system">
+<kw name="We create an assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot;" library="assignment3_high_level_keywords" sourcename="We create an assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot;">
+<kw name="Create assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<arg>${name}</arg>
+<arg>${descr}</arg>
+<arg>${price}</arg>
+<arg>${status}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>id=${${id}}</arg>
+<arg>name=${name}</arg>
+<arg>description=${descr}</arg>
+<arg>price=${${price}}</arg>
+<arg>status=${status}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210925 10:40:43.342" level="INFO">${data} = {'id': 12, 'name': 'Delete Task', 'description': 'To be deleted', 'price': 2000, 'status': 'Delete todo'}</msg>
+<status status="PASS" starttime="20210925 10:40:43.329" endtime="20210925 10:40:43.342"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<arg>json=${data}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.372" level="INFO">POST Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '105', 'Content-Type': 'application/json'} 
+ body=b'{"id": 12, "name": "Delete Task", "description": "To be deleted", "price": 2000, "status": "Delete todo"}' 
+ </msg>
+<msg timestamp="20210925 10:40:43.372" level="INFO">POST Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '154', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignment": {
+    "description": "To be deleted", 
+    "id": 12, 
+    "name": "Delete Task", 
+    "price": 2000, 
+    "status": "Delete todo"
+  }
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.379" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.343" endtime="20210925 10:40:43.379"/>
+</kw>
+<msg timestamp="20210925 10:40:43.382" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.319" endtime="20210925 10:40:43.382"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:43.402" level="INFO">${last_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.382" endtime="20210925 10:40:43.403"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.311" endtime="20210925 10:40:43.403"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.290" endtime="20210925 10:40:43.404"/>
+</kw>
+<kw name="And The number of assignments in the system is &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.468" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:43.468" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '518', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To be deleted", 
+      "id": 12, 
+      "name": "Delete Task", 
+      "price": 2000, 
+      "status": "Delete todo"
+    }, 
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.478" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.424" endtime="20210925 10:40:43.478"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:43.496" level="INFO">${list_assign} = [{'description': 'To be deleted', 'id': 12, 'name': 'Delete Task', 'price': 2000, 'status': 'Delete todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'st...</msg>
+<status status="PASS" starttime="20210925 10:40:43.479" endtime="20210925 10:40:43.496"/>
+</kw>
+<msg timestamp="20210925 10:40:43.501" level="INFO">${list} = [{'description': 'To be deleted', 'id': 12, 'name': 'Delete Task', 'price': 2000, 'status': 'Delete todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'st...</msg>
+<status status="PASS" starttime="20210925 10:40:43.410" endtime="20210925 10:40:43.502"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:43.512" level="INFO">Length is 3</msg>
+<msg timestamp="20210925 10:40:43.512" level="INFO">${num_items} = 3</msg>
+<status status="PASS" starttime="20210925 10:40:43.510" endtime="20210925 10:40:43.512"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:43.540" level="INFO">${prev_num_items} = 3</msg>
+<status status="PASS" starttime="20210925 10:40:43.517" endtime="20210925 10:40:43.550"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.409" endtime="20210925 10:40:43.551"/>
+</kw>
+<kw name="When We delete the assignment with id 12" library="assignment3_high_level_keywords" sourcename="We delete the assignment with id ${id}">
+<kw name="Delete assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.604" level="INFO">DELETE Request : url=http://127.0.0.1:4000/assignments/12 
+ path_url=/assignments/12 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:43.604" level="INFO">DELETE Response : url=http://127.0.0.1:4000/assignments/12 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '328', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignment": [
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ]
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.611" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.571" endtime="20210925 10:40:43.612"/>
+</kw>
+<msg timestamp="20210925 10:40:43.620" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.556" endtime="20210925 10:40:43.620"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:43.623" level="INFO">${last_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.621" endtime="20210925 10:40:43.624"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.555" endtime="20210925 10:40:43.624"/>
+</kw>
+<kw name="Then Server response should have status code 200" library="assignment3_high_level_keywords" sourcename="Server response should have status code ${status}">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${status}</arg>
+<arg>${last_resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210925 10:40:43.652" endtime="20210925 10:40:43.665"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.651" endtime="20210925 10:40:43.666"/>
+</kw>
+<kw name="And The number of assignments in the system should be &quot;N-1&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.732" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:43.735" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '366', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.740" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.692" endtime="20210925 10:40:43.740"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:43.764" level="INFO">${list_assign} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:43.749" endtime="20210925 10:40:43.764"/>
+</kw>
+<msg timestamp="20210925 10:40:43.765" level="INFO">${list} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:43.675" endtime="20210925 10:40:43.765"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:43.767" level="INFO">Length is 2</msg>
+<msg timestamp="20210925 10:40:43.767" level="INFO">${num_items} = 2</msg>
+<status status="PASS" starttime="20210925 10:40:43.766" endtime="20210925 10:40:43.767"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${${prev_num_items}-1}</arg>
+<arg>${num_items}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" starttime="20210925 10:40:43.767" endtime="20210925 10:40:43.777"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.674" endtime="20210925 10:40:43.780"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.271" endtime="20210925 10:40:43.786"/>
+</test>
+<test id="s1-t4" name="Scenario: Try to delete a non existing assignment">
+<kw name="Given An assignment with id 12 does not exist in the system" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id} does not exist in the system">
+<kw name="Delete assignment if exists" library="assignment3_low_level_keywords">
+<arg>${id}</arg>
+<kw name="Get by id" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.875" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments/12 
+ path_url=/assignments/12 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:43.876" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments/12 
+ status=404, reason=NOT FOUND 
+ headers={'Content-Type': 'application/json', 'Content-Length': '33', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignment": "Not Found!"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.876" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.824" endtime="20210925 10:40:43.876"/>
+</kw>
+<msg timestamp="20210925 10:40:43.891" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.823" endtime="20210925 10:40:43.891"/>
+</kw>
+<if>
+<branch type="IF" condition="${resp.status_code} == 200">
+<kw name="Delete assignment" library="assignment3_low_level_keywords">
+<arg>${id}</arg>
+<status status="NOT RUN" starttime="20210925 10:40:43.899" endtime="20210925 10:40:43.900"/>
+</kw>
+<status status="NOT RUN" starttime="20210925 10:40:43.899" endtime="20210925 10:40:43.900"/>
+</branch>
+<status status="PASS" starttime="20210925 10:40:43.892" endtime="20210925 10:40:43.900"/>
+</if>
+<status status="PASS" starttime="20210925 10:40:43.821" endtime="20210925 10:40:43.900"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.809" endtime="20210925 10:40:43.913"/>
+</kw>
+<kw name="And The number of assignments in the system is &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:43.970" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:43.971" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '366', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:43 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:43.974" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:43.918" endtime="20210925 10:40:43.974"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:43.994" level="INFO">${list_assign} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:43.978" endtime="20210925 10:40:43.994"/>
+</kw>
+<msg timestamp="20210925 10:40:44.003" level="INFO">${list} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:43.917" endtime="20210925 10:40:44.004"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:44.013" level="INFO">Length is 2</msg>
+<msg timestamp="20210925 10:40:44.016" level="INFO">${num_items} = 2</msg>
+<status status="PASS" starttime="20210925 10:40:44.009" endtime="20210925 10:40:44.018"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:44.036" level="INFO">${prev_num_items} = 2</msg>
+<status status="PASS" starttime="20210925 10:40:44.021" endtime="20210925 10:40:44.038"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.915" endtime="20210925 10:40:44.042"/>
+</kw>
+<kw name="When We delete the assignment with id 12" library="assignment3_high_level_keywords" sourcename="We delete the assignment with id ${id}">
+<kw name="Delete assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="DELETE On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a DELETE request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.093" level="INFO">DELETE Request : url=http://127.0.0.1:4000/assignments/12 
+ path_url=/assignments/12 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.093" level="INFO">DELETE Response : url=http://127.0.0.1:4000/assignments/12 
+ status=404, reason=NOT FOUND 
+ headers={'Content-Type': 'application/json', 'Content-Length': '33', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignment": "Not Found!"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.094" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.052" endtime="20210925 10:40:44.094"/>
+</kw>
+<msg timestamp="20210925 10:40:44.095" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.050" endtime="20210925 10:40:44.095"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:44.135" level="INFO">${last_resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.095" endtime="20210925 10:40:44.135"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.048" endtime="20210925 10:40:44.135"/>
+</kw>
+<kw name="Then Server response should have status code 404" library="assignment3_high_level_keywords" sourcename="Server response should have status code ${status}">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${status}</arg>
+<arg>${last_resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210925 10:40:44.148" endtime="20210925 10:40:44.164"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.146" endtime="20210925 10:40:44.170"/>
+</kw>
+<kw name="And An assignment with id 12 should not exist in the system" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id} should not exist in the system">
+<kw name="Get by id" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.224" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments/12 
+ path_url=/assignments/12 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.240" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments/12 
+ status=404, reason=NOT FOUND 
+ headers={'Content-Type': 'application/json', 'Content-Length': '33', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignment": "Not Found!"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.245" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.191" endtime="20210925 10:40:44.246"/>
+</kw>
+<msg timestamp="20210925 10:40:44.247" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.179" endtime="20210925 10:40:44.247"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>404</arg>
+<arg>${resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210925 10:40:44.247" endtime="20210925 10:40:44.261"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.176" endtime="20210925 10:40:44.262"/>
+</kw>
+<kw name="And The number of assignments in the system should be &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.338" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.338" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '366', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.340" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.288" endtime="20210925 10:40:44.340"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:44.352" level="INFO">${list_assign} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:44.348" endtime="20210925 10:40:44.352"/>
+</kw>
+<msg timestamp="20210925 10:40:44.354" level="INFO">${list} = [{'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'status': 'Another todo'}, {'description': 'To do something', 'id': 10, 'name': 'New Task', 'price': 100, 'sta...</msg>
+<status status="PASS" starttime="20210925 10:40:44.285" endtime="20210925 10:40:44.354"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:44.356" level="INFO">Length is 2</msg>
+<msg timestamp="20210925 10:40:44.356" level="INFO">${num_items} = 2</msg>
+<status status="PASS" starttime="20210925 10:40:44.355" endtime="20210925 10:40:44.356"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" starttime="20210925 10:40:44.357" endtime="20210925 10:40:44.361"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.275" endtime="20210925 10:40:44.362"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:43.791" endtime="20210925 10:40:44.365"/>
+</test>
+<test id="s1-t5" name="Scenario: Update an existing assignment">
+<kw name="Given An assignment with id 13, name &quot;Previous Name&quot;, description &quot;To be updated&quot;, price 20 and status &quot;Update todo&quot; exists in the system" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot; exists in the system">
+<kw name="We create an assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot;" library="assignment3_high_level_keywords" sourcename="We create an assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot;">
+<kw name="Create assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<arg>${name}</arg>
+<arg>${descr}</arg>
+<arg>${price}</arg>
+<arg>${status}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>id=${${id}}</arg>
+<arg>name=${name}</arg>
+<arg>description=${descr}</arg>
+<arg>price=${${price}}</arg>
+<arg>status=${status}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210925 10:40:44.384" level="INFO">${data} = {'id': 13, 'name': 'Previous Name', 'description': 'To be updated', 'price': 20, 'status': 'Update todo'}</msg>
+<status status="PASS" starttime="20210925 10:40:44.380" endtime="20210925 10:40:44.385"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<arg>json=${data}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.416" level="INFO">POST Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '105', 'Content-Type': 'application/json'} 
+ body=b'{"id": 13, "name": "Previous Name", "description": "To be updated", "price": 20, "status": "Update todo"}' 
+ </msg>
+<msg timestamp="20210925 10:40:44.425" level="INFO">POST Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '154', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignment": {
+    "description": "To be updated", 
+    "id": 13, 
+    "name": "Previous Name", 
+    "price": 20, 
+    "status": "Update todo"
+  }
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.426" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.385" endtime="20210925 10:40:44.426"/>
+</kw>
+<msg timestamp="20210925 10:40:44.427" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.378" endtime="20210925 10:40:44.427"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:44.440" level="INFO">${last_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.427" endtime="20210925 10:40:44.440"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.375" endtime="20210925 10:40:44.441"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.374" endtime="20210925 10:40:44.442"/>
+</kw>
+<kw name="And The number of assignments in the system is &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.474" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.474" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '518', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To be updated", 
+      "id": 13, 
+      "name": "Previous Name", 
+      "price": 20, 
+      "status": "Update todo"
+    }, 
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.475" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.453" endtime="20210925 10:40:44.475"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:44.478" level="INFO">${list_assign} = [{'description': 'To be updated', 'id': 13, 'name': 'Previous Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'st...</msg>
+<status status="PASS" starttime="20210925 10:40:44.476" endtime="20210925 10:40:44.479"/>
+</kw>
+<msg timestamp="20210925 10:40:44.480" level="INFO">${list} = [{'description': 'To be updated', 'id': 13, 'name': 'Previous Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000, 'st...</msg>
+<status status="PASS" starttime="20210925 10:40:44.448" endtime="20210925 10:40:44.480"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:44.482" level="INFO">Length is 3</msg>
+<msg timestamp="20210925 10:40:44.483" level="INFO">${num_items} = 3</msg>
+<status status="PASS" starttime="20210925 10:40:44.481" endtime="20210925 10:40:44.483"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:44.488" level="INFO">${prev_num_items} = 3</msg>
+<status status="PASS" starttime="20210925 10:40:44.485" endtime="20210925 10:40:44.488"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.447" endtime="20210925 10:40:44.489"/>
+</kw>
+<kw name="When We update the name of the assignment with id 13 to &quot;Updated Task Name&quot;" library="assignment3_high_level_keywords" sourcename="We update the name of the assignment with id ${id} to &quot;${name}&quot;">
+<kw name="Update assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<arg>${name}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>name=${name}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210925 10:40:44.496" level="INFO">${data} = {'name': 'Updated Task Name'}</msg>
+<status status="PASS" starttime="20210925 10:40:44.494" endtime="20210925 10:40:44.496"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>json=${data}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.522" level="INFO">PUT Request : url=http://127.0.0.1:4000/assignments/13 
+ path_url=/assignments/13 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '29', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Updated Task Name"}' 
+ </msg>
+<msg timestamp="20210925 10:40:44.522" level="INFO">PUT Response : url=http://127.0.0.1:4000/assignments/13 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '484', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignment": [
+    {
+      "description": "To be updated", 
+      "id": 13, 
+      "name": "Updated Task Name", 
+      "price": 20, 
+      "status": "Update todo"
+    }, 
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ]
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.522" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.497" endtime="20210925 10:40:44.523"/>
+</kw>
+<msg timestamp="20210925 10:40:44.523" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.492" endtime="20210925 10:40:44.524"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:44.534" level="INFO">${last_resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.524" endtime="20210925 10:40:44.535"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.490" endtime="20210925 10:40:44.535"/>
+</kw>
+<kw name="Then Server response should have status code 200" library="assignment3_high_level_keywords" sourcename="Server response should have status code ${status}">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${status}</arg>
+<arg>${last_resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210925 10:40:44.539" endtime="20210925 10:40:44.544"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.537" endtime="20210925 10:40:44.551"/>
+</kw>
+<kw name="And An assignment with id 13, name &quot;Updated Task Name&quot;, description &quot;To be updated&quot;, price 20 and status &quot;Update todo&quot; should exist" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id}, name &quot;${name}&quot;, description &quot;${descr}&quot;, price ${price} and status &quot;${status}&quot; should exist">
+<kw name="Get by id" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.617" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments/13 
+ path_url=/assignments/13 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.618" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments/13 
+ status=409, reason=CONFLICT 
+ headers={'Content-Type': 'application/json', 'Content-Length': '484', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignment": [
+    {
+      "description": "To be updated", 
+      "id": 13, 
+      "name": "Updated Task Name", 
+      "price": 20, 
+      "status": "Update todo"
+    }, 
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ]
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.619" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.570" endtime="20210925 10:40:44.619"/>
+</kw>
+<msg timestamp="20210925 10:40:44.620" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.556" endtime="20210925 10:40:44.620"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${assignments}</var>
+<arg>${resp.json()}</arg>
+<arg>assignment</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:44.629" level="INFO">${assignments} = [{'description': 'To be updated', 'id': 13, 'name': 'Updated Task Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000,...</msg>
+<status status="PASS" starttime="20210925 10:40:44.625" endtime="20210925 10:40:44.629"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${assignment}</var>
+<arg>${assignments}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20210925 10:40:44.631" level="INFO">${assignment} = {'description': 'To be updated', 'id': 13, 'name': 'Updated Task Name', 'price': 20, 'status': 'Update todo'}</msg>
+<status status="PASS" starttime="20210925 10:40:44.630" endtime="20210925 10:40:44.632"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>id</arg>
+<arg>${id}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:44.632" endtime="20210925 10:40:44.634"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>name</arg>
+<arg>${name}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:44.635" endtime="20210925 10:40:44.636"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>description</arg>
+<arg>${descr}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:44.636" endtime="20210925 10:40:44.638"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>price</arg>
+<arg>${price}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:44.638" endtime="20210925 10:40:44.640"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${assignment}</arg>
+<arg>status</arg>
+<arg>${status}</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" starttime="20210925 10:40:44.640" endtime="20210925 10:40:44.642"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.554" endtime="20210925 10:40:44.642"/>
+</kw>
+<kw name="And The number of assignments in the system should be &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.674" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.675" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '522', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To be updated", 
+      "id": 13, 
+      "name": "Updated Task Name", 
+      "price": 20, 
+      "status": "Update todo"
+    }, 
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.676" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.657" endtime="20210925 10:40:44.676"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:44.681" level="INFO">${list_assign} = [{'description': 'To be updated', 'id': 13, 'name': 'Updated Task Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000,...</msg>
+<status status="PASS" starttime="20210925 10:40:44.678" endtime="20210925 10:40:44.681"/>
+</kw>
+<msg timestamp="20210925 10:40:44.682" level="INFO">${list} = [{'description': 'To be updated', 'id': 13, 'name': 'Updated Task Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000,...</msg>
+<status status="PASS" starttime="20210925 10:40:44.654" endtime="20210925 10:40:44.682"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:44.684" level="INFO">Length is 3</msg>
+<msg timestamp="20210925 10:40:44.684" level="INFO">${num_items} = 3</msg>
+<status status="PASS" starttime="20210925 10:40:44.683" endtime="20210925 10:40:44.684"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" starttime="20210925 10:40:44.685" endtime="20210925 10:40:44.687"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.644" endtime="20210925 10:40:44.687"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.371" endtime="20210925 10:40:44.688"/>
+</test>
+<test id="s1-t6" name="Scenario: Try to update a non existing assignment">
+<kw name="Given An assignment with id 14 does not exist in the system" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id} does not exist in the system">
+<kw name="Delete assignment if exists" library="assignment3_low_level_keywords">
+<arg>${id}</arg>
+<kw name="Get by id" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.720" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments/14 
+ path_url=/assignments/14 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.727" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments/14 
+ status=404, reason=NOT FOUND 
+ headers={'Content-Type': 'application/json', 'Content-Length': '33', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignment": "Not Found!"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.728" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.698" endtime="20210925 10:40:44.728"/>
+</kw>
+<msg timestamp="20210925 10:40:44.729" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.696" endtime="20210925 10:40:44.729"/>
+</kw>
+<if>
+<branch type="IF" condition="${resp.status_code} == 200">
+<kw name="Delete assignment" library="assignment3_low_level_keywords">
+<arg>${id}</arg>
+<status status="NOT RUN" starttime="20210925 10:40:44.732" endtime="20210925 10:40:44.732"/>
+</kw>
+<status status="NOT RUN" starttime="20210925 10:40:44.731" endtime="20210925 10:40:44.744"/>
+</branch>
+<status status="PASS" starttime="20210925 10:40:44.730" endtime="20210925 10:40:44.744"/>
+</if>
+<status status="PASS" starttime="20210925 10:40:44.694" endtime="20210925 10:40:44.745"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.692" endtime="20210925 10:40:44.746"/>
+</kw>
+<kw name="And The number of assignments in the system is &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.787" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.792" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '522', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To be updated", 
+      "id": 13, 
+      "name": "Updated Task Name", 
+      "price": 20, 
+      "status": "Update todo"
+    }, 
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.800" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.752" endtime="20210925 10:40:44.800"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:44.804" level="INFO">${list_assign} = [{'description': 'To be updated', 'id': 13, 'name': 'Updated Task Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000,...</msg>
+<status status="PASS" starttime="20210925 10:40:44.801" endtime="20210925 10:40:44.804"/>
+</kw>
+<msg timestamp="20210925 10:40:44.807" level="INFO">${list} = [{'description': 'To be updated', 'id': 13, 'name': 'Updated Task Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000,...</msg>
+<status status="PASS" starttime="20210925 10:40:44.751" endtime="20210925 10:40:44.807"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:44.811" level="INFO">Length is 3</msg>
+<msg timestamp="20210925 10:40:44.812" level="INFO">${num_items} = 3</msg>
+<status status="PASS" starttime="20210925 10:40:44.808" endtime="20210925 10:40:44.812"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:44.818" level="INFO">${prev_num_items} = 3</msg>
+<status status="PASS" starttime="20210925 10:40:44.813" endtime="20210925 10:40:44.819"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.750" endtime="20210925 10:40:44.819"/>
+</kw>
+<kw name="When We update the name of the assignment with id 14 to &quot;Updated Task Name&quot;" library="assignment3_high_level_keywords" sourcename="We update the name of the assignment with id ${id} to &quot;${name}&quot;">
+<kw name="Update assignment" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<arg>${name}</arg>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${data}</var>
+<arg>name=${name}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20210925 10:40:44.833" level="INFO">${data} = {'name': 'Updated Task Name'}</msg>
+<status status="PASS" starttime="20210925 10:40:44.828" endtime="20210925 10:40:44.833"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>json=${data}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.855" level="INFO">PUT Request : url=http://127.0.0.1:4000/assignments/14 
+ path_url=/assignments/14 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '29', 'Content-Type': 'application/json'} 
+ body=b'{"name": "Updated Task Name"}' 
+ </msg>
+<msg timestamp="20210925 10:40:44.855" level="INFO">PUT Response : url=http://127.0.0.1:4000/assignments/14 
+ status=404, reason=NOT FOUND 
+ headers={'Content-Type': 'application/json', 'Content-Length': '33', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignment": "Not Found!"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.856" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.833" endtime="20210925 10:40:44.856"/>
+</kw>
+<msg timestamp="20210925 10:40:44.859" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.823" endtime="20210925 10:40:44.859"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${last_resp}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20210925 10:40:44.866" level="INFO">${last_resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.860" endtime="20210925 10:40:44.866"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.821" endtime="20210925 10:40:44.867"/>
+</kw>
+<kw name="Then Server response should have status code 404" library="assignment3_high_level_keywords" sourcename="Server response should have status code ${status}">
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>${status}</arg>
+<arg>${last_resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210925 10:40:44.876" endtime="20210925 10:40:44.893"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.874" endtime="20210925 10:40:44.894"/>
+</kw>
+<kw name="And An assignment with id 14 should not exist in the system" library="assignment3_high_level_keywords" sourcename="An assignment with id ${id} should not exist in the system">
+<kw name="Get by id" library="assignment3_low_level_keywords">
+<var>${resp}</var>
+<arg>${id}</arg>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments/${id}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.919" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments/14 
+ path_url=/assignments/14 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.919" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments/14 
+ status=404, reason=NOT FOUND 
+ headers={'Content-Type': 'application/json', 'Content-Length': '33', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignment": "Not Found!"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.920" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.900" endtime="20210925 10:40:44.920"/>
+</kw>
+<msg timestamp="20210925 10:40:44.922" level="INFO">${resp} = &lt;Response [404]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.898" endtime="20210925 10:40:44.922"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>404</arg>
+<arg>${resp}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20210925 10:40:44.923" endtime="20210925 10:40:44.930"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.896" endtime="20210925 10:40:44.930"/>
+</kw>
+<kw name="And The number of assignments in the system should be &quot;N&quot;" library="assignment3_high_level_keywords">
+<kw name="Get list of assignments" library="assignment3_low_level_keywords">
+<var>${list}</var>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/assignments</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:44.956" level="INFO">GET Request : url=http://127.0.0.1:4000/assignments 
+ path_url=/assignments 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:44.956" level="INFO">GET Response : url=http://127.0.0.1:4000/assignments 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json', 'Content-Length': '522', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:44 GMT'} 
+ body={
+  "assignments": [
+    {
+      "description": "To be updated", 
+      "id": 13, 
+      "name": "Updated Task Name", 
+      "price": 20, 
+      "status": "Update todo"
+    }, 
+    {
+      "description": "To do something else", 
+      "id": 11, 
+      "name": "Another Task", 
+      "price": 1000, 
+      "status": "Another todo"
+    }, 
+    {
+      "description": "To do something", 
+      "id": 10, 
+      "name": "New Task", 
+      "price": 100, 
+      "status": "todo"
+    }
+  ], 
+  "title": "Lista de Asignaciones"
+}
+ 
+ </msg>
+<msg timestamp="20210925 10:40:44.957" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.936" endtime="20210925 10:40:44.963"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${list_assign}</var>
+<arg>${resp.json()}</arg>
+<arg>assignments</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<msg timestamp="20210925 10:40:44.967" level="INFO">${list_assign} = [{'description': 'To be updated', 'id': 13, 'name': 'Updated Task Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000,...</msg>
+<status status="PASS" starttime="20210925 10:40:44.964" endtime="20210925 10:40:44.967"/>
+</kw>
+<msg timestamp="20210925 10:40:44.968" level="INFO">${list} = [{'description': 'To be updated', 'id': 13, 'name': 'Updated Task Name', 'price': 20, 'status': 'Update todo'}, {'description': 'To do something else', 'id': 11, 'name': 'Another Task', 'price': 1000,...</msg>
+<status status="PASS" starttime="20210925 10:40:44.934" endtime="20210925 10:40:44.968"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${num_items}</var>
+<arg>${list}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20210925 10:40:44.983" level="INFO">Length is 3</msg>
+<msg timestamp="20210925 10:40:44.984" level="INFO">${num_items} = 3</msg>
+<status status="PASS" starttime="20210925 10:40:44.982" endtime="20210925 10:40:44.984"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${prev_num_items}</arg>
+<arg>${num_items}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" starttime="20210925 10:40:44.985" endtime="20210925 10:40:44.987"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.933" endtime="20210925 10:40:44.987"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.690" endtime="20210925 10:40:44.988"/>
+</test>
+<kw name="Shutdown server" library="assignment3_high_level_keywords" type="TEARDOWN">
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>assignment3</arg>
+<arg>/shutdown</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20210925 10:40:45.006" level="INFO">POST Request : url=http://127.0.0.1:4000/shutdown 
+ path_url=/shutdown 
+ headers={'User-Agent': 'python-requests/2.22.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '0'} 
+ body=None 
+ </msg>
+<msg timestamp="20210925 10:40:45.006" level="INFO">POST Response : url=http://127.0.0.1:4000/shutdown 
+ status=200, reason=OK 
+ headers={'Content-Type': 'text/html; charset=utf-8', 'Content-Length': '23', 'Server': 'Werkzeug/2.0.1 Python/3.8.10', 'Date': 'Sat, 25 Sep 2021 13:40:45 GMT'} 
+ body=Server shutting down... 
+ </msg>
+<msg timestamp="20210925 10:40:45.006" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20210925 10:40:44.994" endtime="20210925 10:40:45.006"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:44.992" endtime="20210925 10:40:45.007"/>
+</kw>
+<status status="PASS" starttime="20210925 10:40:39.971" endtime="20210925 10:40:45.007"/>
+</suite>
+<statistics>
+<total>
+<stat pass="6" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="6" fail="0" skip="0" id="s1" name="Test Assignment 3">Test Assignment 3</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
